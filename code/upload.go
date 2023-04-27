@@ -9,10 +9,13 @@ import (
 
 func main() {
 	router := gin.Default()
+	//上传下载的统一目录
+	dst := "./up/"
+	//下载的静态目录 相对程序的目录
+	router.StaticFS(strings.TrimLeft(dst, "."), http.Dir("up"))
 	// Set a lower memory limit for multipart forms (default is 32 MiB)
 	router.MaxMultipartMemory = 8 << 20 // 8 MiB
 
-	dst := "./up/"
 	router.POST("/upload", func(c *gin.Context) {
 		// Multipart form
 		form, _ := c.MultipartForm()
